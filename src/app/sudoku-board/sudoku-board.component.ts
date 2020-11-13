@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BoardPiece } from '../models/boardPiece';
 import { SukokuLogicService } from '../sukoku-logic.service';
 
 @Component({
@@ -8,12 +9,13 @@ import { SukokuLogicService } from '../sukoku-logic.service';
 })
 export class SudokuBoardComponent implements OnInit {
 
+  board: Array<Array<BoardPiece>> = [];
   constructor(
     private logicService: SukokuLogicService,
   ) {}
 
   ngOnInit(): void {
-    this.logicService.buildBoard();
+    this.board = this.logicService.buildBoard();
   }
 
 }

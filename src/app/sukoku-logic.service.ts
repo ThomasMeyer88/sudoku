@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { BoardPiece } from './models/boardPiece';
 
 @Injectable({
   providedIn: 'root'
@@ -12,13 +13,15 @@ export class SukokuLogicService {
  
   }
 
-  buildBoard() {
-    let board: Array<Array<Object>> = [];
+  buildBoard(): Array<Array<BoardPiece>> {
+    let board: Array<Array<BoardPiece>> = [];
     board = this.buildRows(board);
+    board = this.generateValues(board);
     console.log(board);
+    return board;
   }
 
-  buildRows(board: Array<Array<Object>>): Array<Array<Object>>{
+  buildRows(board: Array<Array<BoardPiece>>): Array<Array<BoardPiece>>{
     for (let i = 0; i < 9; i++) {
       board.push([]);
       for (let x = 0; x < 9; x ++) {
@@ -28,17 +31,19 @@ export class SukokuLogicService {
     return board;
   }
 
-  generateValues(board: Array<Array<Object>>): Array<Array<Object>> {
+  generateValues(board: Array<Array<BoardPiece>>): Array<Array<BoardPiece>> {
     for (let i = 0; i < 9; i++) {
+      let values = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       for (let x = 0; x < 9; x++) {
-        let values = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-        board[i][x];
+        let random = this.randomValue(values.length);
+        board[i][x].value = values[random];
+        values.splice(random, 1);
       }
     }
     return board;
   }
 
   randomValue(length: number): number {
-    return Math.floor((Math.random()*(length+1)));
+    return Math.floor((Math.random()*(length)));
   }
 }
