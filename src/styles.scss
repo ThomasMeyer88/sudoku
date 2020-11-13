@@ -1,1 +1,40 @@
-/* You can add global styles to this file, and also import other style files */
+@mixin boardpiece {
+    float: left; 
+    height: 24px; 
+    width: 24px;     
+    margin: 0; 
+    text-align: center;
+    font-size: 20px;
+}
+.container {
+    height: 30px;
+}
+
+.border-left {
+    @include boardpiece();
+    border-left: 3px solid black;
+    border-right: 3px solid grey;
+    border-bottom: 3px solid grey;
+    border-top: 3px solid grey;
+}
+.border-left-top {
+    @include boardpiece();
+    border-left: 3px solid black;
+    border-right: 3px solid grey;
+    border-bottom: 3px solid grey;
+    border-top: 3px solid black;
+}
+.border-left-bottom {
+    @include boardpiece();
+    border-left: 3px solid black;
+    border-right: 3px solid grey;
+    border-bottom: 3px solid black;
+    border-top: 3px solid grey;
+}
+.border-none {
+    @include boardpiece();
+    border-left: 3px solid grey;
+    border-right: 3px solid grey;
+    border-bottom: 3px solid grey;
+    border-top: 3px solid grey;
+}
