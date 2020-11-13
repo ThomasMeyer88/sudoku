@@ -44,25 +44,37 @@ export class SukokuLogicService {
     return board;
   }
 
-  generateValues(): Array<Array<Number>> {
+  generateModifier(i: number): number {
+    let modifier = 0;
+    if (i == 2 || i == 5 || i == 8) {
+      modifier = 3;
+    }
+    if (i == 3 || i == 6 || i == 9) {
+      modifier = 6;
+    }
+    if (i > 3) {
+      modifier++;
+    }
+    if (i > 6) {
+      modifier++;
+    }
+    return modifier;
+  }
+
+  generateValues(): Array<Array<number>> {
     let values = [];
     for (let i = 1; i < 10; i++) {
       values.push([]);
       for (let x = 1; x < 10; x++) {
-        let modifier = 0;
-        if (i == 2 || i == 5 || i == 8) {
-          modifier = 3;
-        }
-        if (i == 3 || i == 6 || i == 9) {
-          modifier = 6;
-        }
-        let value = (x+modifier);
+       
+        let value = (x+this.generateModifier(i));
+
         if (value > 9) {
           value = value - 9;
         }
+
         values[i-1].push(value);
       }
-      console.log(values);
     }
     return values;
   }
