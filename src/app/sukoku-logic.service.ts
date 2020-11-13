@@ -46,21 +46,21 @@ export class SukokuLogicService {
 
   generateValues(): Array<Array<Number>> {
     let values = [];
-    for (let i = 0; i < 9; i++) {
+    for (let i = 1; i < 10; i++) {
       values.push([]);
-      for (let x = 0; x < 9; x++) {
-        let modifier = 1;
-        if (i == 1 || i == 4 || i == 7) {
-          modifier = 4;
-        }
+      for (let x = 1; x < 10; x++) {
+        let modifier = 0;
         if (i == 2 || i == 5 || i == 8) {
-          modifier = 7;
+          modifier = 3;
+        }
+        if (i == 3 || i == 6 || i == 9) {
+          modifier = 6;
         }
         let value = (x+modifier);
         if (value > 9) {
           value = value - 9;
         }
-        values[i].push(value);
+        values[i-1].push(value);
       }
       console.log(values);
     }
