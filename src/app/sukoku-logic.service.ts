@@ -53,12 +53,12 @@ export class SukokuLogicService {
   generateValues(values: Array<Array<BoardPiece>>): Array<Array<BoardPiece>> {
     let rand = this.randomValue(10);
     for (let i = 1; i < 10; i++) {
-      for (let x = rand; x < rand+9; x++) {
-       
+      for (let x = rand; x < rand+9; x++) {     
         let value = (x+this.generateModifier(i));
-
         if (value > 9) {
-          value = value - 9;
+          do {
+            value = value - 9;
+          } while (value > 9);
         }
         values[i-1][x-rand].value = value;
       }
