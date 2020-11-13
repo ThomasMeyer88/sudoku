@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SukokuLogicService } from '../sukoku-logic.service';
 
 @Component({
   selector: 'app-sudoku-board',
@@ -7,9 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SudokuBoardComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    private logicService: SukokuLogicService,
+  ) {}
 
   ngOnInit(): void {
+    this.logicService.buildBoard();
   }
 
 }
