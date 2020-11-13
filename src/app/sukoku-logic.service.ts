@@ -16,8 +16,9 @@ export class SukokuLogicService {
   buildBoard(): Array<Array<BoardPiece>> {
     let board: Array<Array<BoardPiece>> = [];
     board = this.buildRows(board);
-    board = this.generateValues(board);
-    console.log(board);
+    board = this.assignValues(board);
+    this.generateValues();
+    // console.log(board);
     return board;
   }
 
@@ -31,7 +32,7 @@ export class SukokuLogicService {
     return board;
   }
 
-  generateValues(board: Array<Array<BoardPiece>>): Array<Array<BoardPiece>> {
+  assignValues(board: Array<Array<BoardPiece>>): Array<Array<BoardPiece>> {
     for (let i = 0; i < 9; i++) {
       let values = [1, 2, 3, 4, 5, 6, 7, 8, 9];
       for (let x = 0; x < 9; x++) {
@@ -41,6 +42,29 @@ export class SukokuLogicService {
       }
     }
     return board;
+  }
+
+  generateValues(): Array<Array<Number>> {
+    let values = [];
+    for (let i = 0; i < 9; i++) {
+      values.push([]);
+      for (let x = 0; x < 9; x++) {
+        let modifier = 1;
+        if (i == 1 || i == 4 || i == 7) {
+          modifier = 4;
+        }
+        if (i == 2 || i == 5 || i == 8) {
+          modifier = 7;
+        }
+        let value = (x+modifier);
+        if (value > 9) {
+          value = value - 9;
+        }
+        values[i].push(value);
+      }
+      console.log(values);
+    }
+    return values;
   }
 
   randomValue(length: number): number {
