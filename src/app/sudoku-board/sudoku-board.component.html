@@ -8,6 +8,12 @@
         </div>  
         <div *ngIf = "(x == 0 || x == 3 || x == 6) && (i == 2 || i == 5 || i == 8)" class="border-left-bottom">
             {{col.value}}
+        </div>
+        <div *ngIf = "(x == 1 || x == 4 || x == 7)" class="border-none">
+            {{col.value}}
+        </div> 
+        <div *ngIf = "(x == 2 || x == 5 || x == 8)" class="border-none">
+            {{col.value}}
         </div>          
     </div>
     <br>
