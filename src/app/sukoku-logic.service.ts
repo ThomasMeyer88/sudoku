@@ -55,14 +55,15 @@ export class SukokuLogicService {
                 startCol: number): Array<Array<BoardPiece>> {
     let matrixValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     for (let i = startRow; i < startRow+3; i++) {
-
       for (let x = startCol; x < startCol+3; x++) {
         let rowVals = this.getRowVals(board, i);
-        console.log(`%c ROWS`, 'color: green');
-        console.log(rowVals);
+        // console.log(`%c ROWS`, 'color: green');
+        // console.log(rowVals);
         let colVals = this.getColVals(board, x);
-        console.log(`%c COLS`, 'color: blue');
-        console.log(colVals);
+        // console.log(`%c COLS`, 'color: blue');
+        // console.log(colVals);
+        console.log(i, x);
+        let potentialValues = this.removedUsedValues(rowVals, colVals, matrixValues);
         let rand = this.randomValue(matrixValues.length);
         board[i].push(this.newBoardPiece(matrixValues[rand], false));
         matrixValues.splice(rand, 1);
@@ -71,10 +72,17 @@ export class SukokuLogicService {
     return board;
   }
 
-  removedUsedValues(usedVals: Array<number>, values: Array<number>) {
-    usedVals.forEach((i) => {
-        values.splice(values.indexOf(i), 1);
+  removedUsedValues(rowVals: Array<number>, colVals: Array<number>, matrix: Array<number>): Array<number> {
+    let values = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+    console.log(rowVals);
+    console.log(colVals);
+    rowVals.forEach((x) => {
+      values.splice(values.indexOf(x), 1);
     });
+    colVals.forEach((x) => {
+      values.splice(values.indexOf(x), 1);
+    });
+    console.log(values);
     return values;
   }
 
