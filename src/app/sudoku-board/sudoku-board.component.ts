@@ -16,7 +16,6 @@ export class SudokuBoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.board = this.logicService.buildBoard();
-    console.log(this.board);
   }
 
 }
