@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { CheckboxControlValueAccessor } from '@angular/forms';
+import { throwError } from 'rxjs';
 import { BoardPiece } from './models/boardPiece';
 
 @Injectable({
@@ -16,18 +17,20 @@ export class SukokuLogicService {
   buildBoard(): Array<Array<BoardPiece>> {
     let board: Array<Array<BoardPiece>> = [[], [], [], [], [], [], [], [], []];
     board = this.fillBoard(board);
+    
     return board;
   }
 
   fillBoard(board: Array<Array<BoardPiece>>): Array<Array<BoardPiece>> {
     for (let i = 0; i < 3; i++) {
-
       for (let x = 0; x < 3; x++) {
         // 012 345 678
         let startRow = i*3;
         let startCol = x*3;
-
         board = this.generateMatrix(board, startRow, startCol);
+        if (!board) {
+          break;
+        }
       }
     }
     return board;
@@ -53,7 +56,9 @@ export class SukokuLogicService {
 
   generateMatrix(board: Array<Array<BoardPiece>>, startRow: number, 
                 startCol: number): Array<Array<BoardPiece>> {
+
     let matrixValues = [];
+ 
     for (let i = startRow; i < startRow+3; i++) {
       for (let x = startCol; x < startCol+3; x++) {
 
@@ -62,7 +67,14 @@ export class SukokuLogicService {
         let colVals = this.getColVals(board, x);
 
         // console.log(i, x);
-        let potentialValues = this.removedUsedValues(rowVals, colVals, matrixValues);
+        let potentialValues = this.removedUsedValues([rowVals, colVals, matrixValues]);
+
+        if (potentialValues.length == 0) {
+          console.log(`%c No Value Assignable`, 'color: red; font-weight: bold');
+          console.log(`%c Failed at ${startRow}, ${startCol}`, 'color: red; font-weight: bold');
+          // break;
+        }
+
         let rand = this.randomValue(potentialValues.length);
         board[i].push(this.newBoardPiece(potentialValues[rand], false));
         matrixValues.push(potentialValues[rand]);
@@ -71,11 +83,11 @@ export class SukokuLogicService {
     return board;
   }
 
-  removedUsedValues(rowVals: Array<number>, colVals: Array<number>, matrix: Array<number>): Array<number> {
+  removedUsedValues(usedVals: Array<Array<number>>): Array<number> {
     let values = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    values = this.removeValuesFromArray(values, rowVals);
-    values = this.removeValuesFromArray(values, colVals);
-    values = this.removeValuesFromArray(values, matrix);
+    usedVals.forEach((arr: Array<number>) => {
+      values = this.removeValuesFromArray(values, arr);
+    });
     return values;
   }
 
