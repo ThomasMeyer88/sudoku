@@ -56,22 +56,14 @@ export class SukokuLogicService {
     let matrixValues = [];
     for (let i = startRow; i < startRow+3; i++) {
       for (let x = startCol; x < startCol+3; x++) {
+
         let rowVals = this.getRowVals(board, i);
 
         let colVals = this.getColVals(board, x);
 
+        // console.log(i, x);
         let potentialValues = this.removedUsedValues(rowVals, colVals, matrixValues);
         let rand = this.randomValue(potentialValues.length);
-        if (potentialValues[rand] === undefined) {
-          console.log(`%c ROWS`, 'color: green');
-          console.log(rowVals);
-          console.log(`%c COLS`, 'color: blue');
-          console.log(colVals);
-          console.log(`%c Matrix`, 'color: red');
-          console.log(matrixValues);
-          this.removedUsedValues(rowVals, colVals, matrixValues);
-          console.log(potentialValues);
-        }
         board[i].push(this.newBoardPiece(potentialValues[rand], false));
         matrixValues.push(potentialValues[rand]);
       }
@@ -82,16 +74,13 @@ export class SukokuLogicService {
   removedUsedValues(rowVals: Array<number>, colVals: Array<number>, matrix: Array<number>): Array<number> {
     let values = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     values = this.removeValuesFromArray(values, rowVals);
-    console.log(values);
     values = this.removeValuesFromArray(values, colVals);
-    console.log(values);
     values = this.removeValuesFromArray(values, matrix);
-    console.log(values);
     return values;
   }
 
   removeValuesFromArray(values: Array<number>, refArray: Array<number>): Array<number> {
-    if (refArray.length > 1) {
+    if (refArray.length > 0) {
       refArray.forEach((x) => {
         if (values.indexOf(x) > -1) {
           values.splice(values.indexOf(x), 1);
