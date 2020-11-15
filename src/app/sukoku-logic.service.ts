@@ -33,28 +33,39 @@ export class SukokuLogicService {
     return board;
   }
 
-  updateRowVals(board: Array<Array<BoardPiece>>, rowVals: Array<number>, 
-    startRow: number): Array<number> {
+  getRowVals(board: Array<Array<BoardPiece>>,  startRow: number): Array<number> {
+    let rowVals = [];
     board[startRow].forEach((x) => {
       rowVals.push(x.value);
     })
     return rowVals;
   }
 
+  getColVals(board: Array<Array<BoardPiece>>, startCol: number): Array<number> {
+    let colVals = [];
+    board.forEach((x) => {
+      if (x[startCol]) {
+        colVals.push(x[startCol].value);
+      }
+    })
+    return colVals;
+  }
+
   generateMatrix(board: Array<Array<BoardPiece>>, startRow: number, 
                 startCol: number): Array<Array<BoardPiece>> {
-    let potentialValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-    let matrixValues = this.removedUsedValues([], potentialValues);
+    let matrixValues = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     for (let i = startRow; i < startRow+3; i++) {
-      let rowVals = this.updateRowVals(board, [], i);
-      let usuableValues = this.removedUsedValues(rowVals, matrixValues);
 
       for (let x = startCol; x < startCol+3; x++) {
-        console.log(`%c Row: ${i}, Col ${x}`, 'color: blue');
-        console.log(usuableValues);
-        let rand = this.randomValue(usuableValues.length);
-        board[i].push(this.newBoardPiece(usuableValues[rand], false));
-        usuableValues.splice(rand, 1);
+        let rowVals = this.getRowVals(board, i);
+        console.log(`%c ROWS`, 'color: green');
+        console.log(rowVals);
+        let colVals = this.getColVals(board, x);
+        console.log(`%c COLS`, 'color: blue');
+        console.log(colVals);
+        let rand = this.randomValue(matrixValues.length);
+        board[i].push(this.newBoardPiece(matrixValues[rand], false));
+        matrixValues.splice(rand, 1);
       }
     }
     return board;
