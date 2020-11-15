@@ -20,9 +20,9 @@ export class SukokuLogicService {
   }
 
   fillBoard(board: Array<Array<BoardPiece>>): Array<Array<BoardPiece>> {
-    for (let i = 0; i < 1; i++) {
+    for (let i = 0; i < 3; i++) {
 
-      for (let x = 0; x < 1; x++) {
+      for (let x = 0; x < 3; x++) {
         // 012 345 678
         let startRow = i*3;
         let startCol = x*3;
@@ -57,13 +57,21 @@ export class SukokuLogicService {
     for (let i = startRow; i < startRow+3; i++) {
       for (let x = startCol; x < startCol+3; x++) {
         let rowVals = this.getRowVals(board, i);
-        // console.log(`%c ROWS`, 'color: green');
-        // console.log(rowVals);
+
         let colVals = this.getColVals(board, x);
-        // console.log(`%c COLS`, 'color: blue');
-        // console.log(colVals);
+
         let potentialValues = this.removedUsedValues(rowVals, colVals, matrixValues);
         let rand = this.randomValue(potentialValues.length);
+        if (potentialValues[rand] === undefined) {
+          console.log(`%c ROWS`, 'color: green');
+          console.log(rowVals);
+          console.log(`%c COLS`, 'color: blue');
+          console.log(colVals);
+          console.log(`%c Matrix`, 'color: red');
+          console.log(matrixValues);
+          this.removedUsedValues(rowVals, colVals, matrixValues);
+          console.log(potentialValues);
+        }
         board[i].push(this.newBoardPiece(potentialValues[rand], false));
         matrixValues.push(potentialValues[rand]);
       }
@@ -74,8 +82,11 @@ export class SukokuLogicService {
   removedUsedValues(rowVals: Array<number>, colVals: Array<number>, matrix: Array<number>): Array<number> {
     let values = [1, 2, 3, 4, 5, 6, 7, 8, 9];
     values = this.removeValuesFromArray(values, rowVals);
+    console.log(values);
     values = this.removeValuesFromArray(values, colVals);
+    console.log(values);
     values = this.removeValuesFromArray(values, matrix);
+    console.log(values);
     return values;
   }
 
@@ -87,7 +98,6 @@ export class SukokuLogicService {
         }
       });
     }
-    console.log(values);
     return values;
   } 
 
