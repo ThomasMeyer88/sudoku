@@ -45,4 +45,14 @@ export class SudokuGridService {
     }
     return this.validateSum(sum);
   }
+
+  checkMatrix(startRow: number, startCol: number, grid: Array<Array<BoardPiece>>): Boolean {
+    let sum: number = 0;
+    for (let i = startRow; i < startRow + 3; i++) {
+      for (let x = startCol; x < startCol + 3; i++) {
+        sum += grid[i][x].value;
+      }
+    }
+    return this.validateSum(sum);
+  }
 }
