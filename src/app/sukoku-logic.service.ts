@@ -1,27 +1,48 @@
 import { Injectable } from '@angular/core';
 import { BoardPiece } from './models/boardPiece';
 
+import { SudokuGridService } from './sudoku-grid.service';
+
 @Injectable({
   providedIn: 'root'
 })
 export class SukokuLogicService {
-  constructor() { }
+
+  constructor(
+    private gridService: SudokuGridService,
+  ) { }
 
   generateBoard() {
     let difficulty = 0;
  
   }
 
+  runChecks(board: Array<Array<BoardPiece>>) {
+    for (let i = 0; i < 9; i++) {
+      console.log(`%c Row: ${this.gridService.checkRow(i, board)}`, 'color: blue');
+      for (let x = 0; x < 9; x++) {
+        console.log(`%c Col: ${this.gridService.checkCol(x, board)}`, 'color: purple');
+      }
+    }
+    for (let i = 0; i < 3; i++) {
+      for (let x = 0; x < 3; x++) {
+        let startRow = i*3;
+        let startCol = x*3;
+        console.log(`%c Matrix: ${this.gridService.checkMatrix(startRow, startCol, board)}`, 'color: green');
+      }
+    }
+  }
+
   buildBoard(): Array<Array<BoardPiece>> {
     let board: Array<Array<BoardPiece>> = [[], [], [], [], [], [], [], [], []];
     board = this.fillBoard(board);
-    
+    this.runChecks(board);
     return board;
   }
 
   fillBoard(board: Array<Array<BoardPiece>>): Array<Array<BoardPiece>> {
-    for (let i = 0; i < 2; i++) {
-      for (let x = 0; x < 2; x++) {
+    for (let i = 0; i < 3; i++) {
+      for (let x = 0; x < 3; x++) {
         // 012 345 678
         let startRow = i*3;
         let startCol = x*3;
@@ -62,15 +83,14 @@ export class SukokuLogicService {
         let colVals = this.getColVals(board, x);
 
         let potentialValues = this.removedUsedValues([rowVals, colVals, matrixValues]);
+        let rand = this.randomValue(potentialValues.length);
 
         if (potentialValues.length == 0) {
           console.log(`%c No Value Assignable`, 'color: red; font-weight: bold');
           console.log(`%c Failed at ${startRow}, ${startCol}`, 'color: red; font-weight: bold');
-          this.deleteFromBoard(board, startRow, startCol);
-          break;
+          rand = 0;
         }
 
-        let rand = this.randomValue(potentialValues.length);
         board[i].push(this.newBoardPiece(potentialValues[rand], false));
         matrixValues.push(potentialValues[rand]);
       }

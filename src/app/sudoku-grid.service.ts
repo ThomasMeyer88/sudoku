@@ -10,7 +10,7 @@ export class SudokuGridService {
  
   constructor() { }
 
-  generateNewGrid(): Array<Array<BoardPiece>> {
+  generateNewGrid(isTest: Boolean): Array<Array<BoardPiece>> {
     let sudokuGrid: Array<Array<BoardPiece>> = [];
 
     for (let i = 0; i < 9; i++) {
@@ -23,7 +23,7 @@ export class SudokuGridService {
   }
 
   validateSum(sum: number): Boolean {
-    if (sum == 55) {
+    if (sum == 45) {
       return true;
     } else {
       return false;
@@ -49,10 +49,14 @@ export class SudokuGridService {
   checkMatrix(startRow: number, startCol: number, grid: Array<Array<BoardPiece>>): Boolean {
     let sum: number = 0;
     for (let i = startRow; i < startRow + 3; i++) {
-      for (let x = startCol; x < startCol + 3; i++) {
+      for (let x = startCol; x < startCol + 3; x++) {
         sum += grid[i][x].value;
       }
     }
     return this.validateSum(sum);
+  }
+
+  randomValue(length: number): number {
+    return Math.floor((Math.random()*(length)));
   }
 }
