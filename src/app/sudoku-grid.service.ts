@@ -22,11 +22,7 @@ export class SudokuGridService {
     return sudokuGrid;
   }
 
-  checkRow(row: number, grid: Array<Array<BoardPiece>>): Boolean {
-    let sum: number = 0;
-    for (let i = 0; i < 9; i++) {
-      sum += grid[row][i].value;
-    }
+  validateSum(sum: number): Boolean {
     if (sum == 55) {
       return true;
     } else {
@@ -34,15 +30,19 @@ export class SudokuGridService {
     }
   }
 
+  checkRow(row: number, grid: Array<Array<BoardPiece>>): Boolean {
+    let sum: number = 0;
+    for (let i = 0; i < 9; i++) {
+      sum += grid[row][i].value;
+    }
+    return this.validateSum(sum);
+  }
+
   checkCol(col: number, grid: Array<Array<BoardPiece>>): Boolean {
     let sum: number = 0;
     for (let i = 0; i < 9; i++) {
       sum += grid[i][col].value;
     }
-    if (sum == 55) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.validateSum(sum);
   }
 }
