@@ -10,16 +10,25 @@ export class SudokuGridService {
  
   constructor() { }
 
-  generateNewGrid(isTest: Boolean): Array<Array<BoardPiece>> {
+  generateNewGrid(): Array<Array<BoardPiece>> {
     let sudokuGrid: Array<Array<BoardPiece>> = [];
-
     for (let i = 0; i < 9; i++) {
-      for (let x = 0; x < 9; x++ ) {
-        sudokuGrid[i].push(this.newBoardPiece);
+      let row = [];
+      for (let x = 1; x < 10; x++ ) {
+        row.push({value: x, visible: true});
       }
+      sudokuGrid.push(this.shuffleRow(row));
     }
 
     return sudokuGrid;
+  }
+
+  shuffleRow(row: Array<BoardPiece>): Array<BoardPiece> {
+    for (let i = row.length - 1; i > 0; i--) {
+      const x = this.randomValue(row.length);
+      [row[i], row[x]] = [row[x], row[i]];
+    }
+    return row;
   }
 
   validateSum(sum: number): Boolean {

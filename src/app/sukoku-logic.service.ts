@@ -12,11 +12,6 @@ export class SukokuLogicService {
     private gridService: SudokuGridService,
   ) { }
 
-  generateBoard() {
-    let difficulty = 0;
- 
-  }
-
   runChecks(board: Array<Array<BoardPiece>>) {
     for (let i = 0; i < 9; i++) {
       console.log(`%c Row: ${this.gridService.checkRow(i, board)}`, 'color: blue');
@@ -34,8 +29,9 @@ export class SukokuLogicService {
   }
 
   buildBoard(): Array<Array<BoardPiece>> {
-    let board: Array<Array<BoardPiece>> = [[], [], [], [], [], [], [], [], []];
-    board = this.fillBoard(board);
+    // let board: Array<Array<BoardPiece>> = [[], [], [], [], [], [], [], [], []];
+    // board = this.fillBoard(board);
+    let board = this.gridService.generateNewGrid();
     this.runChecks(board);
     return board;
   }
