@@ -50,6 +50,7 @@ export class SudokuGridService {
   checkCol(col: number, grid: Array<Array<BoardPiece>>): Boolean {
     let sum: number = 0;
     for (let i = 0; i < 9; i++) {
+      console.log(i);
       sum += grid[i][col].value;
     }
     return this.validateSum(sum);

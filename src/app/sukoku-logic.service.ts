@@ -13,17 +13,12 @@ export class SukokuLogicService {
   ) { }
 
   runChecks(board: Array<Array<BoardPiece>>) {
-    for (let i = 0; i < 9; i++) {
-      console.log(`%c Row: ${this.gridService.checkRow(i, board)}`, 'color: blue');
-      for (let x = 0; x < 9; x++) {
-        console.log(`%c Col: ${this.gridService.checkCol(x, board)}`, 'color: purple');
-      }
-    }
-    for (let i = 0; i < 3; i++) {
-      for (let x = 0; x < 3; x++) {
-        let startRow = i*3;
-        let startCol = x*3;
-        console.log(`%c Matrix: ${this.gridService.checkMatrix(startRow, startCol, board)}`, 'color: green');
+    for (let i = 0; i < 1; i++) {
+      for (let x = 0; x < 1; x++) {
+        // while (!this.gridService.checkCol(x, board)) {
+          // board[i] = this.gridService.shuffleRow(board[i]);
+          // console.log(`%c Col: ${this.gridService.checkCol(x, board)}`, 'color: purple');
+        // }
       }
     }
   }
