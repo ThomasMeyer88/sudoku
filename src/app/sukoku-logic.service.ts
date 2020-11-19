@@ -27,7 +27,6 @@ export class SukokuLogicService {
           if (!this.validateBoard(board, x, i, rand)) {
             do {
               rand = this.randomValue(9)+1;
-              console.log(`%c INVALID`, 'color: red; font-weight: bold');
             } while (!this.validateBoard(board, x, i, rand));
           }
           board[i].push(this.newBoardPiece(rand, true));
@@ -47,6 +46,8 @@ export class SukokuLogicService {
     if (!this.verifyRow(board[row], val)) {
       return false;
     } else if (!this.verifyCol(board, col, val)) {
+      return false;
+    } else if (!this.verifyGrid(board, col, row, val)) {
       return false;
     } else {
       return true;
@@ -73,6 +74,30 @@ export class SukokuLogicService {
       }
     })
     return valid;
+  }
+
+  verifyGrid(board: Array<Array<BoardPiece>>, col: number, row: number, val: number): Boolean {
+    let valid = true;
+    for (let i = this.grid(row); i < this.grid(row)+3; i++) {
+      for (let x = this.grid(col); x < this.grid(col+3); x++) {
+        if(board[i][x]) {
+          if (board[i][x].value == val) {
+            return false;
+          }
+        }
+      }
+    }
+    return valid;
+  }
+
+  grid(value: number): number {
+    if (value < 3) {
+      return 0;
+    } else if (value < 6) {
+      return 3;
+    } else {
+      return 6;
+    }
   }
 
 
