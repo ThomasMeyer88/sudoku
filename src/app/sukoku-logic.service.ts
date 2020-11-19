@@ -20,17 +20,21 @@ export class SukokuLogicService {
 
   solveBoard(board: Array<Array<BoardPiece>>): Array<Array<BoardPiece>> {
     for (let i = 0; i < 9; i++) {
+      let attempts = 0;
       for (let x = 0; x < 9; x++) {
+        attempts++;
         if(board[i][x].value == 0) {
           let values = [1,2,3,4,5,6,7,8,9];
           for (let z = 0; z < 9; z++) {
             let rand = this.randomValue(values.length);
             let val = values[rand];
             values.splice(rand, 1);
-            console.log(z);
             if (this.validateBoard(board, x, i, val)) {
               board[i][x].value = val;
               break;
+            } else if (z == 8) {
+              console.log(i, x);
+              console.log(`%c Attempts: ${attempts}`, 'color: red; font-weight: bold');
             }
           }
         }
