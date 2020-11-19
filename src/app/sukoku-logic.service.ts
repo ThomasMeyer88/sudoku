@@ -27,7 +27,8 @@ export class SukokuLogicService {
           if (!this.validateBoard(board, x, i, rand)) {
             do {
               rand = this.randomValue(9)+1;
-            } while (this.verifyRow(board[i], rand) == false);
+              console.log(`%c INVALID`, 'color: red; font-weight: bold');
+            } while (!this.validateBoard(board, x, i, rand));
           }
           board[i].push(this.newBoardPiece(rand, true));
         } else {
@@ -43,11 +44,13 @@ export class SukokuLogicService {
   }
 
   validateBoard(board: Array<Array<BoardPiece>>, col: number, row: number, val: number): Boolean {
-    let valid = true;
-    if (this.verifyRow(board[row], val) == false) {
-      valid = false;
+    if (!this.verifyRow(board[row], val)) {
+      return false;
+    } else if (!this.verifyCol(board, col, val)) {
+      return false;
+    } else {
+      return true;
     }
-    return valid;
   }
 
   verifyRow(row: Array<BoardPiece>, val: number): Boolean {
@@ -60,11 +63,13 @@ export class SukokuLogicService {
     return valid;
   }
 
-  verifyCol(col: Array<Array<BoardPiece>>, row: number, val: number): Boolean {
+  verifyCol(board: Array<Array<BoardPiece>>, col: number, val: number): Boolean {
     let valid = true;
-    col.forEach((i: Array<BoardPiece>) => {
-      if(i[row].value == val) {
-        valid = false;
+    board.forEach((row: Array<BoardPiece>) => {
+      if(row[col]) {
+        if(row[col].value == val) {
+          valid = false;
+        }
       }
     })
     return valid;
