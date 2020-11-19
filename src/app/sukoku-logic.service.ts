@@ -12,22 +12,11 @@ export class SukokuLogicService {
     private gridService: SudokuGridService,
   ) { }
 
-  runChecks(board: Array<Array<BoardPiece>>) {
-    for (let i = 0; i < 1; i++) {
-      for (let x = 0; x < 1; x++) {
-        // while (!this.gridService.checkCol(x, board)) {
-          // board[i] = this.gridService.shuffleRow(board[i]);
-          // console.log(`%c Col: ${this.gridService.checkCol(x, board)}`, 'color: purple');
-        // }
-      }
-    }
-  }
 
   buildBoard(): Array<Array<BoardPiece>> {
     // let board: Array<Array<BoardPiece>> = [[], [], [], [], [], [], [], [], []];
     // board = this.fillBoard(board);
     let board = this.gridService.generateNewGrid();
-    this.runChecks(board);
     return board;
   }
 
