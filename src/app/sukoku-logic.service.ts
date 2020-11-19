@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BoardPiece } from './models/boardPiece';
 
-import { SudokuGridService } from './sudoku-grid.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +8,12 @@ import { SudokuGridService } from './sudoku-grid.service';
 export class SukokuLogicService {
 
   constructor(
-    private gridService: SudokuGridService,
   ) { }
 
 
   buildBoard(): Array<Array<BoardPiece>> {
-    // let board: Array<Array<BoardPiece>> = [[], [], [], [], [], [], [], [], []];
-    // board = this.fillBoard(board);
-    let board = this.gridService.generateNewGrid();
+    let board: Array<Array<BoardPiece>> = [[], [], [], [], [], [], [], [], []];
+    board = this.fillBoard(board);
     return board;
   }
 
