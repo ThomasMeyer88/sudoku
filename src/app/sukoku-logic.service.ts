@@ -23,7 +23,9 @@ export class SukokuLogicService {
       let attempts = 0;
       for (let x = 0; x < 9; x++) {
         attempts++;
-        if(board[i][x].value == 0) {
+        // console.log(`%c Attempts ${attempts}`, 'color: red');
+        if(board[i][x].visible == false) {
+          board[i][x].value = 0;
           let values = [1,2,3,4,5,6,7,8,9];
           for (let z = 0; z < 9; z++) {
             let rand = this.randomValue(values.length);
@@ -33,8 +35,11 @@ export class SukokuLogicService {
               board[i][x].value = val;
               break;
             } else if (z == 8) {
-              console.log(i, x);
-              console.log(`%c Attempts: ${attempts}`, 'color: red; font-weight: bold');
+              console.log(`%c ROW ${i+1}, COL ${x+1}`, 'color: blue');
+              // i = 0;
+              if (attempts < 82) {
+                x = 0;
+              } 
             }
           }
         }
