@@ -23,18 +23,34 @@ export class SukokuLogicService {
       for (let x = 0; x < 9; x++ ) {
         if (this.randomValue(4) == 1) {
           visible++;
-          board[i].push(this.newBoardPiece(x+1, true));
+          let rand = this.randomValue(9)+1;
+          if (this.verifyRow(board[i], rand) == false) {
+            do {
+              rand = this.randomValue(9)+1;
+            } while (this.verifyRow(board[i], rand) == false);
+          }
+          board[i].push(this.newBoardPiece(rand, true));
         } else {
           board[i].push(this.newBoardPiece(0, false));
         }
       }
     }
-    console.log(visible);
     if (visible < 17 || visible > 22) {
       board = this.getEmptyBoard();
       this.addStartValues(board);
     }
     return board;
+  }
+
+  verifyRow(row: Array<BoardPiece>, val: number): Boolean {
+    let valid = true;
+    row.forEach((i) => {
+      if(i.value == val) {
+        console.log(i.value, val);
+        valid = false;
+      }
+    });
+    return valid;
   }
 
 
