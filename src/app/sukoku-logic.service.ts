@@ -14,6 +14,7 @@ export class SukokuLogicService {
   buildBoard(): Array<Array<BoardPiece>> {
     let board: Array<Array<BoardPiece>> = this.getEmptyBoard();
     board = this.addStartValues(board);
+
     board = this.solveBoard(board);
     return board;
   }
@@ -25,6 +26,7 @@ export class SukokuLogicService {
         attempts++;
         // console.log(`%c Attempts ${attempts}`, 'color: red');
         if(board[i][x].visible == false) {
+          console.log(i, x, board[i][x].value);
           board[i][x].value = 0;
           let values = [1,2,3,4,5,6,7,8,9];
           for (let z = 0; z < 9; z++) {
@@ -37,9 +39,7 @@ export class SukokuLogicService {
             } else if (z == 8) {
               console.log(`%c ROW ${i+1}, COL ${x+1}`, 'color: blue');
               // i = 0;
-              if (attempts < 82) {
-                x = 0;
-              } 
+              
             }
           }
         }
